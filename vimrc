@@ -1,3 +1,5 @@
+execute pathogen#infect()
+
 syntax on
 filetype on
 filetype plugin indent on
@@ -35,13 +37,19 @@ set showmatch
 set softtabstop=4 shiftwidth=4 expandtab autoindent
 set tabstop=4
 
-" Status line settings
-set showmode
-set showcmd
+" Lightline/Status line settings
+set noshowmode
+set noshowcmd
 set laststatus=2
-set statusline=\ %F\ %=\ Line:\ %l\ \ Column:\ %c
+" set statusline=\ %F\ %=\ Line:\ %l\ \ Column:\ %c
+let g:lightline = {'colorscheme': 'jellybeans',}
 
-set wildmenu
+let g:lightline.active = {
+            \ 'left': [ [ 'mode', 'paste' ],
+            \           [ 'readonly', 'absolutepath', 'modified' ] ],
+            \ 'right': [ [ 'lineinfo' ],
+            \            [ 'percent' ],
+            \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
 set wildmode=list:longest
 
 set ttyfast
@@ -95,7 +103,7 @@ nnoremap <leader>l :call ToggleNumber()<CR>
 " save session
 nnoremap <leader>s :mksession<CR>
 
-" Custom Functions {{{
+" Custom Functions 
 function! ToggleNumber()
     if(&relativenumber == 1)
         set norelativenumber
@@ -104,3 +112,10 @@ function! ToggleNumber()
         set relativenumber
     endif
 endfunc
+
+"NERDTree
+nmap <leader>j :NERDTreeFind<CR>
+nmap <leader>n :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+let NERDTREEIGNORE=['\.DS_STORE']
+
